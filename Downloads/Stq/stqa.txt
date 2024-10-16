@@ -1,0 +1,413 @@
+prac3 : 
+
+package prac1;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+public class prac1 {
+
+    static String driverPath = "C:\\Users\\sujal\\Downloads\\geckodriver-v0.35.0-win64\\geckodriver.exe";
+    public static WebDriver driver;
+
+    public static void main(String[] args) {
+
+        int a = 10, b = 20;
+
+        System.out.println("Hi....");
+        System.out.println(a + b);
+        System.out.println("Selenium demo.....");
+
+        try {
+            // Set the path for geckodriver
+            System.setProperty("webdriver.gecko.driver", driverPath);
+
+            // Create FirefoxOptions
+            FirefoxOptions options = new FirefoxOptions();
+            options.addPreference("browser.startup.homepage", "about:blank");
+            options.addPreference("browser.tabs.loadInBackground", false);
+
+            // Initialize the Firefox driver
+            driver = new FirefoxDriver(options);
+            driver.get("https://www.facebook.com/");
+
+            // Maximize the window
+            driver.manage().window().maximize();
+
+        } catch (Exception ex) {
+            System.out.println("An error occurred: " + ex.getMessage());
+        } finally {
+            // Ensure the driver quits
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+Prac4 : 
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+
+# Set Chrome options
+options = Options()
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
+# Start the test
+print("Testing Started")
+driver = webdriver.Chrome(options=options)
+
+try:
+    # Navigate to the webpage
+    driver.get("https://www.saucedemo.com/")
+    
+    # Wait until the page title contains "Swag Labs"
+    WebDriverWait(driver, 10).until(EC.title_contains("Swag Labs"))
+    
+    # Get and print the page title
+    title = driver.title
+    print(f"Page title is: {title}")
+
+    # Find the username and password fields, and login
+    driver.find_element(By.ID, "user-name").send_keys("standard_user")
+    driver.find_element(By.ID, "password").send_keys("secret_sauce")
+    driver.find_element(By.ID, "login-button").click()
+
+    # Wait until the first item in the inventory is visible
+    first_item = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.CLASS_NAME, "inventory_item"))
+    )
+
+    # Get the name of the first inventory item
+    first_item_name = first_item.find_element(By.CLASS_NAME, "inventory_item_name").text
+    print(f"First item name: {first_item_name}")
+
+    # Print success message
+    print("TEST PASSED: Mr. Sujal Singh, your LOGIN is SUCCESSFULLY verified")
+
+except TimeoutException:
+    print("TEST FAILED: Element not found within the given time")
+
+finally:
+    # Close the browser
+    driver.quit()
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+prac5 : 
+
+package prac2;
+
+import jxl.*; // Used for WorkbookSettings, Workbook
+import jxl.write.*; // Used for WriteException, WritableWorkbook, WritableSheet, Label
+import jxl.write.Number; // Used for Number
+import java.io.*; // Used for IOException, File
+import java.util.Locale; // Used for Locale
+
+public class prac2 {
+    public static void main(String[] args) throws IOException, WriteException {
+        // Student data
+        String header[] = {"StudentName", "Subject1", "Subject2", "Subject3", "Total"};
+        String sname[] = {"Carls", "James", "Paul", "Philip", "Smith", "Thomson", "Rhodey", "Stark", "Gary", "AnneMarie"};
+        int marks[][] = {
+            {50, 45, 60}, // Carls
+        
+            {55, 70, 45}, // James
+            {67, 78, 89}, // Paul
+            {90, 30, 0},  // Philip
+            {0, 0, 0},    // Smith
+            {0, 0, 0},    // Thomson
+            {0, 0, 0},    // Rhodey
+            {0, 0, 0},    // Stark
+            {0, 0, 0},    // Gary
+            {0, 0, 0}     // AnneMarie
+        };
+        
+        // Create Excel file
+        File file = new File("student.xls");
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
+        WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
+        WritableSheet excelSheet = workbook.createSheet("Report", 0);
+
+        // Creating header row
+        for (int c = 0; c < header.length; c++) {
+            Label l = new Label(c, 0, header[c]);
+            excelSheet.addCell(l);
+        }
+
+        // Filling names and marks
+        for (int r = 0; r < sname.length; r++) {
+            Label nameLabel = new Label(0, r + 1, sname[r]);
+            excelSheet.addCell(nameLabel);
+            
+            // Fill in the marks for each subject
+            for (int c = 0; c < marks[r].length; c++) {
+                Number num = new Number(c + 1, r + 1, marks[r][c]);
+                excelSheet.addCell(num);
+            }
+
+            // Calculate total marks
+            int total = 0;
+            for (int mark : marks[r]) {
+                total += mark;
+            }
+            Number totalNum = new Number(4, r + 1, total);
+            excelSheet.addCell(totalNum);
+        }
+
+        // Write to workbook and close
+        workbook.write();
+        workbook.close();
+        System.out.println("Excel File Created!!!!!");
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+prac 6 :
+
+package prac3;
+
+import java.io.File;
+import java.io.IOException;
+import jxl.Cell;
+import jxl.CellType;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
+public class prac3 {
+    private String inputFile;
+
+    public void setInputFile(String inputFile) {
+        this.inputFile = inputFile;
+    }
+
+    public void read() throws IOException {
+        File inputWorkbook = new File(inputFile);
+        Workbook workbook;
+        int count = 0;
+
+        try {
+            workbook = Workbook.getWorkbook(inputWorkbook);
+            // Get the first sheet
+            Sheet sheet = workbook.getSheet(0);
+
+            // Loop over all rows and columns
+            for (int j = 0; j < sheet.getRows(); j++) {
+                boolean scoredAboveSixty = false; // Flag to check if student scored above 60 in any subject
+
+                for (int i = 0; i < sheet.getColumns(); i++) {
+                    Cell cell = sheet.getCell(i, j);
+                    if (cell.getType() == CellType.NUMBER) {
+                        if (Integer.parseInt(cell.getContents()) >= 60) {
+                            scoredAboveSixty = true; // Set flag if score is >= 60
+                            break; // Exit the inner loop if a score >= 60 is found
+                        }
+                    }
+                }
+
+                // Increment count if the student scored above 60 in any subject
+                if (scoredAboveSixty) {
+                    count++;
+                }
+            }
+
+            System.out.println("Total number of students who scored more than 60 in one or more subjects: " + count);
+        } catch (BiffException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the workbook if needed (not necessary with JExcelAPI)
+            // workbook.close(); // Uncomment if using a library that requires closing the workbook
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        prac3 test = new prac3();
+        test.setInputFile("C:\\Users\\sujal\\eclipse-workspace\\prac2\\student.xls");
+        test.read();
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+prac 7 :
+
+package prac4;
+
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+public class prac4 {
+    public static void main(String[] args) {
+        // Set the path to the GeckoDriver executable
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\sujal\\Downloads\\geckodriver-v0.35.0-win64\\geckodriver.exe"); // Replace with the actual path
+
+        // Initialize FirefoxOptions if needed
+        FirefoxOptions options = new FirefoxOptions();
+        // options.addArguments("--headless"); // Uncomment to run in headless mode
+
+        // Initialize the FirefoxDriver
+        WebDriver driver = new FirefoxDriver(options);
+
+        try {
+            // Open a website
+            String url = "https://wikipedia.com";
+            driver.get(url);
+
+            // Set an implicit wait time
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+            // Find all button elements
+            List<WebElement> buttons = driver.findElements(By.tagName("button"));
+            System.out.println("The number of buttons is: " + buttons.size());
+
+            // Find all input elements
+            List<WebElement> inputs = driver.findElements(By.tagName("input"));
+            System.out.println("The number of input fields is: " + inputs.size());
+
+            // Print each button's text and each input's type
+            for (WebElement button : buttons) {
+                System.out.println("Button text: " + button.getText());
+            }
+            for (WebElement input : inputs) {
+                System.out.println("Input type: " + input.getAttribute("type"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the driver
+            driver.quit(); // Use quit() to ensure all browser windows are closed
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+prac 8 :
+
+package prac5;
+
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+public class prac5 {
+    public static void main(String[] args) {
+        // Set the path to the GeckoDriver executable
+        System.setProperty("webdriver.gecko.driver", "C:\\\\Users\\\\sujal\\\\Downloads\\\\geckodriver-v0.35.0-win64\\\\geckodriver.exe"); // Replace with the actual path to your geckodriver
+
+        // Initialize FirefoxOptions
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        // firefoxOptions.addArguments("--headless"); // Uncomment to run in headless mode
+
+        // Initialize the FirefoxDriver
+        WebDriver driver = new FirefoxDriver(firefoxOptions);
+
+        try {
+            // Open the website
+            String url = "https://wikipedia.com"; // Replace with the actual URL
+            driver.get(url);
+
+            // Set an implicit wait time
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+            // Locate the combo box (select element) using CSS Selector
+            WebElement comboBox = driver.findElement(By.cssSelector("select")); // Locates the first <select> element on the page
+
+            // Get all options within the combo box
+            List<WebElement> comboBoxOptions = comboBox.findElements(By.tagName("option"));
+
+            // Print the number of items in the combo box
+            System.out.println("Number of items in the combo box: " + comboBoxOptions.size());
+
+            // Optionally, print out each item
+            for (WebElement option : comboBoxOptions) {
+                System.out.println(option.getText());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the driver
+            driver.quit(); // Use quit() to ensure all browser windows are closed
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+prac 9 :
+
+package prac6;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import java.util.List;
+
+public class prac6 {
+    public static void main(String[] args) {
+        // Set the path for geckodriver (replace with your actual path)
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\sujal\\Downloads\\geckodriver-v0.35.0-win64\\geckodriver.exe");
+
+        // Initialize WebDriver (Firefox)
+        WebDriver driver = new FirefoxDriver();
+
+        try {
+            // Navigate to the desired webpage
+            driver.get("https://www.w3schools.com/html/html_forms.asp"); // Replace with the actual URL
+
+            // Find all checkboxes on the page
+            List<WebElement> checkboxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+
+            // Initialize counters for total, checked, and unchecked checkboxes
+            int totalCheckboxes = checkboxes.size();
+            int checkedCheckboxes = 0;
+            int uncheckedCheckboxes = 0;
+
+            // Count checked and unchecked checkboxes
+            for (WebElement checkbox : checkboxes) {
+                if (checkbox.isSelected()) {
+                    checkedCheckboxes++;
+                } else {
+                    uncheckedCheckboxes++;
+                }
+            }
+
+            // Print the results
+            System.out.println("Total checkboxes: " + totalCheckboxes);
+            System.out.println("Checked checkboxes: " + checkedCheckboxes);
+            System.out.println("Unchecked checkboxes: " + uncheckedCheckboxes);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle any exceptions
+        } finally {
+            // Close the browser
+            driver.quit(); // Ensure the driver quits even if an exception occurs
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
