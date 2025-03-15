@@ -12,7 +12,41 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        montserrat: ['var(--font-montserrat)'],
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: 'rgb(255 255 255 / 0.8)',
+            a: {
+              color: 'rgb(255 255 255 / 0.8)',
+              '&:hover': {
+                color: 'rgb(255 255 255 / 0.6)',
+              },
+            },
+            h1: {
+              color: 'rgb(255 255 255 / 1)',
+            },
+            h2: {
+              color: 'rgb(255 255 255 / 1)',
+            },
+            h3: {
+              color: 'rgb(255 255 255 / 1)',
+            },
+            strong: {
+              color: 'rgb(255 255 255 / 1)',
+            },
+            blockquote: {
+              color: 'rgb(255 255 255 / 0.8)',
+              borderLeftColor: 'rgb(255 255 255 / 0.2)',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 } satisfies Config;
