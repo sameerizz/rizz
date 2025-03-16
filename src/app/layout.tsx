@@ -14,8 +14,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Sameer Siddiqui - Digital Explorer",
-  description: "AI, wealth, the future — writing to escape the rat race",
+  title: "Sameer Siddiqui",
+  description: "Personal website of Sameer Siddiqui",
 };
 
 export default function RootLayout({

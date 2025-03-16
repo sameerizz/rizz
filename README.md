@@ -1,62 +1,52 @@
-# Personal Portfolio Website
+# Personal Site
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS.
+A minimalist personal site for Sameer Siddiqui, focused on AI, wealth creation, and digital exploration.
 
 ## Features
 
-- 🎨 Modern and clean design
-- 🌓 Dark/Light mode support
-- 📱 Fully responsive
-- ⚡ Fast performance
-- 🎭 Smooth animations
-- 🔍 SEO optimized
+- Clean, minimalist design with dark mode support
+- Responsive layout for all devices
+- Detailed personal profile with journey timeline
+- "What I Do" section with key focus areas
+- Newsletter subscription section
+- Social media links
+- Dark/light mode toggle
 
 ## Tech Stack
 
-- Next.js 14
+- Next.js
 - TypeScript
 - Tailwind CSS
-- React 18
+- React
+- next-themes (for dark mode)
 
 ## Getting Started
 
-### Prerequisites
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-- Node.js 18.17 or later
-- npm or yarn
+## Build and Deploy
 
-### Installation
+To build the project for production:
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/my-pers.git
+npm run build
 ```
 
-2. Navigate to the project directory:
+To start the production server:
+
 ```bash
-cd my-pers
+npm start
 ```
-
-3. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
-
-4. Run the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Deployment
-
-This project is optimized for deployment on Vercel. Simply push your code to GitHub and connect your repository to Vercel for automatic deployments.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT
