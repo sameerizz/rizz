@@ -18,6 +18,8 @@
   --btn-inverted-text: #000000;
   --grid-color: rgba(0, 0, 0, 0.05);
   --grid-size: 30px;
+  --mobile-menu-bg: rgba(255, 255, 255, 0.98);
+  --mobile-menu-border: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
@@ -36,6 +38,8 @@
   --btn-inverted-text: #ffffff;
   --grid-color: rgba(255, 255, 255, 0.09);
   --grid-size: 30px;
+  --mobile-menu-bg: rgba(0, 0, 0, 0.98);
+  --mobile-menu-border: rgba(255, 255, 255, 0.15);
 }
 
 /* Prevent horizontal overflow */
@@ -510,4 +514,25 @@ html {
 /* Font-specific adjustments */
 .font-montserrat {
   font-family: var(--font-montserrat), sans-serif !important;
+}
+
+/* Mobile menu animations */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu-enter {
+  animation: slideDown 0.2s ease-out forwards;
+}
+
+/* Add extra padding to account for fixed header */
+main {
+  padding-top: 5rem;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-top: 4rem;
+  }
 }
