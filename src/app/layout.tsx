@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Providers } from "./providers";
+import ClientLayout from "./client-layout";
 
 // Load Montserrat with all weights for better typography
 const montserrat = Montserrat({ 
@@ -27,16 +28,18 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat.variable}`} suppressHydrationWarning>
       <body className={`${montserrat.className} font-montserrat flex flex-col min-h-screen w-full overflow-x-hidden`}>
         <Providers>
-          <div className="abstract-shape abstract-shape-1"></div>
-          <div className="abstract-shape abstract-shape-2"></div>
-          <div className="abstract-line abstract-line-1"></div>
-          <div className="abstract-line abstract-line-2"></div>
-          <div className="abstract-grid"></div>
-          <Header />
-          <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 relative">
-            {children}
-          </main>
-          <Footer />
+          <ClientLayout>
+            <div className="abstract-shape abstract-shape-1"></div>
+            <div className="abstract-shape abstract-shape-2"></div>
+            <div className="abstract-line abstract-line-1"></div>
+            <div className="abstract-line abstract-line-2"></div>
+            <div className="abstract-grid"></div>
+            <Header />
+            <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-12 relative">
+              {children}
+            </main>
+            <Footer />
+          </ClientLayout>
         </Providers>
       </body>
     </html>

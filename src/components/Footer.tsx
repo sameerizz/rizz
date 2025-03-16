@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-black/10 dark:border-white/20 py-8 sm:py-12 mt-12 sm:mt-20 w-full">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
+    <footer className="border-t border-black/10 dark:border-white/20 py-12 mt-20 w-full">
+      <div className="max-w-6xl mx-auto px-6 w-full">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center">
           <div className="mb-8 md:mb-0">
             <p className="font-montserrat text-sm font-bold mb-2">
@@ -11,7 +11,7 @@ export default function Footer() {
               Thinker, creator, digital explorer
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-4 sm:gap-5">
+          <div className="flex flex-wrap items-center gap-5">
             <a href="https://x.com/sameerizz" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity" aria-label="X (Twitter)">
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -44,7 +44,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-black/5 dark:border-white/10 text-center md:text-left">
+        <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/10 text-center md:text-left">
           <p className="text-xs font-medium muted-text">
             © 2024 Sameer Siddiqui. Building the future, one line of code at a time.
           </p>

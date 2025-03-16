@@ -5,26 +5,26 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
-  // Check if we're on mobile on component mount and window resize
+  // Close menu when clicking anywhere else on the page
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const handleClickOutside = () => {
+      if (isMenuOpen) setIsMenuOpen(false);
     };
     
-    // Initial check
-    checkIfMobile();
+    // Add timeout to prevent immediate closing when opening
+    const timeoutId = setTimeout(() => {
+      document.addEventListener('click', handleClickOutside);
+    }, 100);
     
-    // Add event listener for window resize
-    window.addEventListener('resize', checkIfMobile);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+    return () => {
+      clearTimeout(timeoutId);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/5 dark:bg-white/5 border-b border-black/10 dark:border-white/15 w-full">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/90 dark:bg-black/90 border-b border-black/10 dark:border-white/15 w-full">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
@@ -47,12 +47,15 @@ export default function Header() {
           <div className="flex items-center md:hidden">
             <ThemeToggle />
             <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="ml-2 p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMenuOpen(!isMenuOpen);
+              }}
+              className="ml-3 p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none"
               aria-label="Toggle menu"
             >
               <svg 
-                className="h-6 w-6" 
+                className="h-6 w-6 text-black dark:text-white" 
                 xmlns="http://www.w3.org/2000/svg" 
                 fill="none" 
                 viewBox="0 0 24 24" 
@@ -71,32 +74,35 @@ export default function Header() {
       
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-black border-b border-black/10 dark:border-white/15 animate-slideDown">
-          <div className="px-4 pt-2 pb-4 space-y-3">
+        <div 
+          className="md:hidden bg-white dark:bg-black border-b border-black/10 dark:border-white/15"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="px-4 py-3 space-y-4">
             <a 
               href="#about" 
-              className="block py-2 text-sm hover:opacity-70 transition-opacity"
+              className="block py-2 text-sm text-black dark:text-white hover:opacity-70 transition-opacity"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </a>
             <a 
               href="#what-i-do" 
-              className="block py-2 text-sm hover:opacity-70 transition-opacity"
+              className="block py-2 text-sm text-black dark:text-white hover:opacity-70 transition-opacity"
               onClick={() => setIsMenuOpen(false)}
             >
               What I Do
             </a>
             <a 
               href="#vision" 
-              className="block py-2 text-sm hover:opacity-70 transition-opacity"
+              className="block py-2 text-sm text-black dark:text-white hover:opacity-70 transition-opacity"
               onClick={() => setIsMenuOpen(false)}
             >
               Vision
             </a>
             <a 
               href="#connect" 
-              className="block py-2 text-sm hover:opacity-70 transition-opacity"
+              className="block py-2 text-sm text-black dark:text-white hover:opacity-70 transition-opacity"
               onClick={() => setIsMenuOpen(false)}
             >
               Connect
