@@ -1,19 +1,33 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // Check if we're on mobile on component mount and window resize
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/5 dark:bg-white/5 border-b border-black/10 dark:border-white/15 w-full">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-        <div className="flex justify-between h-16 sm:h-20">
+        <div className="flex justify-between items-center h-16 sm:h-20">
+          {/* Logo */}
           <div className="flex items-center">
             <a href="/" className="font-montserrat text-lg font-bold tracking-tight hover:opacity-70 transition-opacity">
               sameerizz
@@ -33,8 +47,8 @@ export default function Header() {
           <div className="flex items-center md:hidden">
             <ThemeToggle />
             <button 
-              onClick={toggleMenu}
-              className="ml-2 p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="ml-2 p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none"
               aria-label="Toggle menu"
             >
               <svg 
@@ -57,10 +71,7 @@ export default function Header() {
       
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mobile-menu-enter" style={{
-          background: 'var(--mobile-menu-bg)',
-          borderBottom: '1px solid var(--mobile-menu-border)'
-        }}>
+        <div className="md:hidden bg-white dark:bg-black border-b border-black/10 dark:border-white/15 animate-slideDown">
           <div className="px-4 pt-2 pb-4 space-y-3">
             <a 
               href="#about" 
